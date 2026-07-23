@@ -1,0 +1,46 @@
+name: Playwright Tests Automation Pipeline
+
+# 1. DISPARADORES: Cuándo se ejecuta esta acción
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+# 2. TRABAJOS A EJECUTAR
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest # Corre en un servidor remoto de Linux
+
+    steps:
+    # Paso A: Clona tu código de GitHub en la máquina virtual remota
+    - name: Checkout del código
+      uses: actions/checkout@v4
+
+    # Paso B: Prepara el entorno de Node.js
+    - name: Configurar Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+
+    # Paso C: Instala las librerías de tu package.json
+    - name: Instalar dependencias del proyecto
+      run: npm ci
+
+    # Paso D: Instala los navegadores de Playwright en la máquina virtual
+    - name: Instalar navegadores de Playwright con dependencias
+      run: npx playwright install --with-deps
+
+    # Paso E: EJECUCIÓN DE LOS TESTS
+    - name: Correr suite de automatización de Playwright
+      run: npx playwright test
+
+    # Paso F: ARTIFACTS (Guardar el reporte aunque el test falle)
+    - name: Guardar reporte HTML como Artefacto
+      uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
