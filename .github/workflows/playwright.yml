@@ -22,7 +22,7 @@ jobs:
     - name: Configurar Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: lts/*
+        node-version: '22'
 
     # Paso C: Instala las librerías de tu package.json
     - name: Instalar dependencias del proyecto
