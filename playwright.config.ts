@@ -29,46 +29,40 @@ export default defineConfig({
     // baseURL: 'http://localhost:3000',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
+    baseURL: 'https://www.saucedemo.com',
     trace: 'on-first-retry',
+    screenshot: 'only-on-failure',
   },
 
   /* Configure projects for major browsers */
+/* Definición de Proyectos y Dispositivos */
   projects: [
+    /* --- NAVEGADORES DE ESCRITORIO --- */
     {
-      name: 'chromium',
+      name: 'chromium-desktop',
       use: { ...devices['Desktop Chrome'] },
     },
-
     {
-      name: 'firefox',
+      name: 'firefox-desktop',
       use: { ...devices['Desktop Firefox'] },
     },
 
+    /* --- DISPOSITIVOS MÓVILES (iOS & Android) --- */
     {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      name: 'mobile-iphone',
+      use: { 
+        ...devices['iPhone 14 Pro'],
+        // Emula pantalla táctil y orientación vertical
+      },
     },
-
-    /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
-    // {
-    //   name: 'Mobile Safari',
-    //   use: { ...devices['iPhone 12'] },
-    // },
-
-    /* Test against branded browsers. */
-    // {
-    //   name: 'Microsoft Edge',
-    //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
-    // },
-    // {
-    //   name: 'Google Chrome',
-    //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-    // },
+    {
+      name: 'mobile-pixel',
+      use: { 
+        ...devices['Pixel 7'],
+      },
+    },
   ],
+});
 
   /* Run your local dev server before starting the tests */
   // webServer: {
@@ -76,4 +70,4 @@ export default defineConfig({
   //   url: 'http://localhost:3000',
   //   reuseExistingServer: !process.env.CI,
   // },
-});
+
