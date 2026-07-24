@@ -6,9 +6,8 @@ test.describe('Pruebas de Regresión Visual', () => {
         await page.goto('https://www.saucedemo.com/');
 
         // Toma o compara la captura pixel a pixel contra la foto base
-        await expect(page).toHaveScreenshot('login-baseline.png', {
-            maxDiffPixelRatio: 0.02, // Tolerancia del 2% para ligeras variaciones de renderizado
-        });
+        // ✅ AHORA (Playwright asigna el nombre según el test y el SO de forma nativa):
+        await expect(page).toHaveScreenshot({ maxDiffPixelRatio: 0.02 });;
     });
 
     test('Validar componente aislado (Botón de Login)', async ({ page }) => {
@@ -38,3 +37,8 @@ test('Validar pantalla tapando elementos dinámicos', async ({ page }) => {
     await expect(page).toHaveScreenshot('sin-password.png');
 });
 
+// // ❌ ANTES (Fuerza un nombre estático que busca sufijos rígidos):
+// await expect(page).toHaveScreenshot('login-baseline.png', { maxDiffPixelRatio: 0.02 });
+
+// // ✅ AHORA (Playwright asigna el nombre según el test y el SO de forma nativa):
+// await expect(page).toHaveScreenshot({ maxDiffPixelRatio: 0.02 });

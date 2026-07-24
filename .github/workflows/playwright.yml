@@ -34,7 +34,7 @@ jobs:
 
     # Paso E: EJECUCIÓN DE LOS TESTS
     - name: Correr suite de automatización de Playwright
-      run: npx playwright test
+      run: npx playwright test test --update-snapshots
 
     # Paso F: ARTIFACTS (Guardar el reporte aunque el test falle)
     - name: Guardar reporte HTML como Artefacto
